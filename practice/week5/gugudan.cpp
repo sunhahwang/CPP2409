@@ -17,5 +17,5 @@ int main() {
             cout << table[r][c] << ", ";
         }
         cout << endl;
-    }
+    } 
 }

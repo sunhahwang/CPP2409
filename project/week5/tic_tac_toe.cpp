@@ -80,7 +80,7 @@ int main() {
         }
         if (board[0][2] == currentUser && board[1][1] == currentUser && board[2][0] == currentUser) {
             win = true;
-        }
+        } 
 
         if (win == true) {
             cout << currentUser<< "의 승리입니다." << endl;
