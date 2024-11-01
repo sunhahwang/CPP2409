@@ -4,13 +4,14 @@ using namespace std;
 
 const int mapX = 5;
 const int mapY = 5;
-int hp = 20;
+int hp = 20; // 현재(기본) HP값(함수에서의 사용을 위해 전역변수로 선언)
 
 // 사용자 정의 함수
 bool checkXY(int user_x, int mapX, int user_y, int mapY);
 void displayMap(int map[][mapX], int user_x, int user_y);
 bool checkGoal(int map[][mapX], int user_x, int user_y);
 void checkState(int map[][mapX], int user_x, int user_y);
+int inMapFalse (bool inMap, int user_x, int user_y);
 
 // 메인  함수
 int main() {
@@ -32,12 +33,14 @@ int main() {
 		// 사용자의 입력을 저장할 변수
 		string user_input = "";
 
+		// 새로운 이동 전에 HP값이 0이하인지 확인
         if (hp <= 0) {
             cout << "HP가 0 이하가 되었습니다. 실패했습니다." << endl;
             cout << "게임을 종료합니다.";
             break;
         }
 
+		// 현재 HP값 출력 후 이동 명령어 받기
 		cout << "현재 HP: " << hp << "  명령어를 입력하세요 (up,down,left,right,map,end): ";
 		cin >> user_input;
 
@@ -45,13 +48,15 @@ int main() {
 			// 위로 한 칸 올라가기
 			user_y -= 1;
 			bool inMap = checkXY(user_x, mapX, user_y, mapY);
-			if (inMap == false) {
-				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
-				user_y += 1;
-			}
-			else {
+			// 다시 돌아가기 위한 값 받아오기
+			int moveValue = inMapFalse(inMap, user_x, user_y);
+			// 돌아가는 경우 (1), 그대로 이동하는 경우 (0)
+			user_y += moveValue;
+			if (moveValue == 0) {
 				cout << "위로 한 칸 올라갑니다." << endl;
+				// 이동에 따른 HP값 감소
                 hp--;
+				// 어떤 상태를 만났는지 판단 후 문구 출력, HP 증감
                 checkState(map, user_x, user_y);
 				displayMap(map, user_x, user_y);
 			}
@@ -60,13 +65,15 @@ int main() {
 			// TODO: 아래로 한 칸 내려가기
 			user_y += 1;
 			bool inMap = checkXY(user_x, mapX, user_y, mapY);
-			if (inMap == false) {
-				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
-				user_y -= 1;
-			}
-			else {
+			// 다시 돌아가기 위한 값 받아오기
+			int moveValue = inMapFalse(inMap, user_x, user_y);
+			// 돌아가는 경우 (1), 그대로 이동하는 경우 (0)
+			user_y -= moveValue;
+			if (moveValue == 0) {
 				cout << "아래로 한 칸 내려갑니다." << endl;
+				// 이동에 따른 HP값 감소
                 hp--;
+				// 어떤 상태를 만났는지 판단 후 문구 출력, HP 증감
                 checkState(map, user_x, user_y);
 				displayMap(map, user_x, user_y);
 			}
@@ -75,14 +82,15 @@ int main() {
 			// TODO: 왼쪽으로 이동하기
 			user_x -= 1;
 			bool inMap = checkXY(user_x, mapX, user_y, mapY);
-
-			if (inMap == false) {
-				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
-				user_x += 1;
-			}
-			else {
+			// 다시 돌아가기 위한 값 받아오기
+			int moveValue = inMapFalse(inMap, user_x, user_y);
+			// 돌아가는 경우 (1), 그대로 이동하는 경우 (0)
+			user_x += moveValue;
+			if (moveValue == 0) {
 				cout << "왼쪽으로 이동합니다." << endl;
+				// 이동에 따른 HP값 감소
                 hp--;
+				// 어떤 상태를 만났는지 판단 후 문구 출력, HP 증감
                 checkState(map, user_x, user_y);
 				displayMap(map, user_x, user_y);
 			}
@@ -91,16 +99,19 @@ int main() {
 			// TODO: 오른쪽으로 이동하기
 			user_x += 1;
 			bool inMap = checkXY(user_x, mapX, user_y, mapY);
-			if (inMap == false) {
-				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
-				user_x -= 1;
-			}
-			else {
+			// 다시 돌아가기 위한 값 받아오기
+			int moveValue = inMapFalse(inMap, user_x, user_y);
+			// 돌아가는 경우 (1), 그대로 이동하는 경우 (0)
+			user_x -= moveValue;
+			if (moveValue == 0) {
 				cout << "오른쪽으로 이동합니다." << endl;
+				// 이동에 따른 HP값 감소
                 hp--;
+				// 어떤 상태를 만났는지 판단 후 문구 출력, HP 증감
                 checkState(map, user_x, user_y);
 				displayMap(map, user_x, user_y);
 			}
+
 		}
 		else if (user_input == "map") {
 			// TODO: 지도 보여주기 함수 호출
@@ -178,6 +189,7 @@ bool checkGoal(int map[][mapX], int user_x, int user_y) {
 	return false;
 }
 
+// 아이템/포션, 적을 만났을 때 그에 대한 메세지 출력 및 HP 증감
 void checkState(int map[][mapX], int user_x, int user_y) {
     if (map[user_y][user_x] == 1) {
         hp += 2;
@@ -193,11 +205,12 @@ void checkState(int map[][mapX], int user_x, int user_y) {
     }
 }
 
-int inMap_false (int map[][mapX], int user_x, int user_y) {
-    int moveValue = 0;
-    if (inMap == flase) {
+// 맵을 벗어났는지 확인하고 그에 대한 메세지 출력
+int inMapFalse (bool inMap, int user_x, int user_y) {
+    if (inMap == false) {
         cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
-        moveValue = 1;
+        return 1;
     }
-    return moveValue;
+    return 0;
 }
+
