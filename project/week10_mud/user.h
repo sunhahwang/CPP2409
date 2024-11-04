@@ -2,9 +2,14 @@
 #include <string>
 using namespace std;
 
-class Hp {
+class User {
 private:
     int hp;
+
 public:
-    void DecreaseHP(int dec_hp)
-}
+    void DecreaseHP(int dec_hp);
+    void IncreaseHP(int inc_hp);
+    int GetHP();
+    User();
+    
+};
