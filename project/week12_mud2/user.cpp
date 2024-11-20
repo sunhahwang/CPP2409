@@ -1,5 +1,6 @@
 #include "user.h"
 
+// void 함수의 하는 일(본문)
 void User::DecreaseHP(int dec_hp) {
     hp = hp - dec_hp;
 }
@@ -16,10 +17,13 @@ void User::DoAttack() {
     cout << "공격합니다." << endl;
 }
 
+// int 함수의 하는 일 (본문)(return 값)
 int User::GetHP() {
     return hp;
 }
 
+
+// 자식 클래스의 DoAttack() 재정의
 void Magician::DoAttack() {
     cout << "마법 사용" << endl;
 }
