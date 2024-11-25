@@ -2,46 +2,46 @@
 #include <string>
 using namespace std;
 
+// 모든 사용자의 기본 클래스
 class User {
-private:
-    int hp;
-    int itemCnt;
-
 public:
-    virtual void DecreaseHP(int dec_hp) = 0;
-    virtual void IncreaseHP(int inc_hp) = 0;
-    virtual void IncreaseItemCnt(int inc_ic) = 0;
-    void DoAttack();
-    virtual int GetHP() = 0;
-
-    User() : hp(20), itemCnt(0){};
-    friend ostream& operator << (ostream& os, const User& u) {
-        os << "현재 HP는 " << u.hp << "이고, " << "먹은 아이템은 총 " << u.itemCnt << "개 입니다.";
-        return os;
-    }
+    virtual void DoAttack() = 0; // 공격 가상 함수
+    virtual void DecreaseHP(int dec_hp) = 0; // HP 감소 가상 함수
+    virtual void IncreaseHP(int inc_hp) = 0; // HP 증가 가상 함수
+    virtual void IncreaseItemCnt(int inc_ic) = 0; // itenCnt 증가 가상 함수
+    virtual int GetHP() const = 0; // HP값 반환 가상 함수
+    virtual void SpeakInformation() = 0; // 정보 출력 가상 함수
 };
 
+// User 클래스를 상속받는 플레이어 Mafician
 class Magician : public User {
 private:
-    int hp;
-    int itemCnt;
+    int hp; // Magician의 hp
+    int itemCnt; // Magician의 itemCnt
 public:
-    void DoAttack();
-    void DecreaseHP(int dec_hp);
-    void IncreaseHP(int inc_hp);
-    void IncreaseItemCnt(int inc_ic);
-    int GetHP();
+    Magician() : hp(20), itemCnt(0) {} // 생성자를 통해 초기 설정
+    
+    // User의 함수 오버라이딩
+    void DecreaseHP(int dec_hp) override;
+    void IncreaseHP(int inc_hp) override;
+    void IncreaseItemCnt(int inc_ic) override;
+    int GetHP() const override;
+    void DoAttack() override;
+    void SpeakInformation() override;
 };
 
-// User를 부모 클래스로 두는 자식 클래스 Warrior
 class Warrior : public User {
 private:
-    int hp;
-    int itemCnt;
+    int hp; // Warrior의 hp
+    int itemCnt; // Warrior의 itemCnt
 public:
-    void DoAttack();
-    void DecreaseHP(int dec_hp);
-    void IncreaseHP(int inc_hp);
-    void IncreaseItemCnt(int inc_ic);
-    int GetHP();
+    Warrior() : hp(20), itemCnt(0) {} // 생성자를 통해 초기 설정
+    
+    // User의 함수 오버라이딩
+    void DecreaseHP(int dec_hp) override;
+    void IncreaseHP(int inc_hp) override;
+    void IncreaseItemCnt(int inc_ic) override;
+    int GetHP() const override;
+    void DoAttack() override;
+    void SpeakInformation() override;
 };

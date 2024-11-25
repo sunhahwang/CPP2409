@@ -1,78 +1,51 @@
 #include "user.h"
 
-// void 함수의 하는 일(본문)
-void User::DecreaseHP(int dec_hp) {
+// Magician의 User 가상 함수 오버라이딩(상세 내용)
+void Magician::DecreaseHP(int dec_hp) {
     hp = hp - dec_hp;
-}
-
-void User::IncreaseHP(int inc_hp) {
-    hp = hp + inc_hp;
-}
-
-void User::IncreaseItemCnt(int inc_ic) {
-    itemCnt = itemCnt + inc_ic;
-}
-
-void User::DoAttack() {
-    cout << "공격합니다." << endl;
-}
-
-// int 함수의 하는 일 (본문)(return 값)
-int User::GetHP() {
-    return hp;
-}
-
-
-// void 함수의 하는 일(본문)
-void Magician::DecreaseHP(int dec_hp) override {
-    hp = hp - dec_hp;
-}
+} // hp 감소
 
 void Magician::IncreaseHP(int inc_hp) {
     hp = hp + inc_hp;
-}
+} // hp 증가
 
 void Magician::IncreaseItemCnt(int inc_ic) {
     itemCnt = itemCnt + inc_ic;
-}
+} // itemCnt 증가
 
 void Magician::DoAttack() {
-    cout << "공격합니다." << endl;
-}
+    cout << "마법 사용." << endl;
+} // 메세지 출력
 
-// int 함수의 하는 일 (본문)(return 값)
-int Magician::GetHP() {
+int Magician::GetHP() const {
     return hp;
-}
+} // 현 hp 값 반환
 
-// void 함수의 하는 일(본문)
+void Magician::SpeakInformation() {
+    cout << "현재 HP는 " << hp << "이고, 먹은 아이템은 총 " << itemCnt << "개 입니다." << endl;
+} // 메세지 출력
+
+// Warrior의 User 가상 함수 오버라이딩(상세 내용)
 void Warrior::DecreaseHP(int dec_hp) {
     hp = hp - dec_hp;
-}
+} // hp 감소
 
 void Warrior::IncreaseHP(int inc_hp) {
     hp = hp + inc_hp;
-}
+} // hp 증가
 
 void Warrior::IncreaseItemCnt(int inc_ic) {
     itemCnt = itemCnt + inc_ic;
-}
+} // itemCnt 증가
 
 void Warrior::DoAttack() {
-    cout << "공격합니다." << endl;
-}
+    cout << "베기 사용." << endl;
+} // 메세지 출력
 
-// int 함수의 하는 일 (본문)(return 값)
-int Warrior::GetHP() {
+int Warrior::GetHP() const {
     return hp;
-}
+} // 현 hp 값 반환
 
-
-// 자식 클래스의 DoAttack() 재정의
-void Magician::DoAttack() {
-    cout << "마법 사용" << endl;
-}
-
-void Warrior::DoAttack() {
-    cout << "베기 사용" << endl;
-}
+void Warrior:: SpeakInformation() {
+    cout << "현재 HP는 " << hp << "이고, 먹은 아이템은 총 " << itemCnt << "개 입니다." << endl;
+} // 메세지 출력
